@@ -18,7 +18,6 @@ export function AuthProvider({ children }) {
     const navigate = useNavigate();
 
     function login(e) {
-        // setLoading(true);
         e.preventDefault();
 
         fetch("http://127.0.0.1:8000/backend/login/", {
@@ -55,9 +54,7 @@ export function AuthProvider({ children }) {
             .catch((errorMessage) => {
                 alert(errorMessage);
             })
-            .finally(() => {
-                // setLoading(false);
-            });
+            .finally(() => {});
     }
 
     function logout() {

@@ -1,6 +1,6 @@
 # Authentication-Trials
 
-To get User-Authentication working with Django and React/JSX through [SimpleJWT](https://django-rest-framework-simplejwt.readthedocs.io/en/latest/ "SimpleJWT Documentation").
+To get User Authentication working with Django and React/JSX through [SimpleJWT](https://django-rest-framework-simplejwt.readthedocs.io/en/latest/ "SimpleJWT Documentation").
 
 ![image](https://user-images.githubusercontent.com/31612100/209422533-a688de71-4ad9-45fd-85e7-8d8450dfceca.png)
 

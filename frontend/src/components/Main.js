@@ -30,7 +30,7 @@ function Protected() {
 
     // Purpose of Outlet
     // The <Outlet> component can be used in a parent <Route> element to render out child elements.
-    // So the solution would be to nest private routes inside of a parent route.
+    // So the solution can be to nest private routes inside of a parent route.
     return user ? <Outlet /> : <Navigate to="/login" />;
 }
 

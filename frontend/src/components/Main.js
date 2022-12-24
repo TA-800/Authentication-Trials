@@ -7,8 +7,6 @@ import Account, { Login, Logout } from "./Account";
 import AuthContext from "../context/AuthContext";
 
 function Main() {
-    let { user } = useContext(AuthContext);
-
     return (
         <div className="main-wrapper">
             <Routes>

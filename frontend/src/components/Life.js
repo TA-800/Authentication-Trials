@@ -16,9 +16,14 @@ export default function () {
 function Questions() {
     const [questions, setQuestions] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [reload, setReload] = useState(false);
 
     useEffect(() => {
-        fetch("http://127.0.0.1:8000/backend/life/")
+        setLoading(true);
+        console.log("Fetching data from backend");
+        // Empty the questions array
+        setQuestions([]);
+        fetch("http://127.0.0.1:8000/backend/life/") // Using Django to fetch data instead of fetching from the API directly just for fun.
             .then((response) => {
                 if (response.status !== 200) {
                     throw new Error(
@@ -37,13 +42,22 @@ function Questions() {
             .catch((error) => {
                 alert(error);
             });
-    }, []);
+    }, [reload]);
 
     return (
         <>
-            <h2 className="text-xl">
-                <i>TRIVIA FOR YOUR LEISURE.</i>
-            </h2>
+            <div className="text-xl flex flex-row justify-between items-center mx-10">
+                <div>
+                    <i>TRIVIA FOR YOUR LEISURE.</i>
+                </div>
+                <div>
+                    <button
+                        className="btn btn-red"
+                        onClick={() => setReload((reload) => !reload)}>
+                        RELOAD
+                    </button>
+                </div>
+            </div>
             <br />
             {loading ? (
                 <div>Loading</div>
@@ -110,5 +124,6 @@ function unescapeHtml(safe) {
         .replace(/&quot;/g, '"')
         .replace(/&#039;/g, "'")
         .replace(/&micro;/g, "µ")
+        .replace(/&Uuml/g, "Ü")
         .replace(/&uuml;/g, "ü");
 }

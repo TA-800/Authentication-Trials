@@ -6,12 +6,16 @@ export default function Account() {
     let { user } = useContext(AuthContext);
 
     return (
-        <div className="flex flex-col justify-center items-center">
-            <h1 className="text-5xl">Account</h1>
-            <p className="text-2xl">Welcome, {user}, to the Account page</p>
-
+        <>
+            <div className="flex flex-col justify-center items-center">
+                <h1 className="text-5xl font-mono">Account</h1>
+                <p className="text-2xl font-mono">
+                    Welcome, {user}, to the Account page
+                </p>
+            </div>
+            <br />
             <Logout />
-        </div>
+        </>
     );
 }
 
@@ -34,8 +38,7 @@ export function Login() {
             </div>
             <form
                 className="flex flex-col justify-center items-center gap-y-4"
-                onSubmit={(e) => login(e)}
-            >
+                onSubmit={(e) => login(e)}>
                 {/* {err} */}
                 <div className="flex flex-row w-96 h-12 border-2 border-white border-opacity-10 justify-evenly items-center">
                     <label htmlFor="username">Username</label>
@@ -65,8 +68,8 @@ export function Logout() {
     let { logout } = useContext(AuthContext);
 
     return (
-        <div className="flex flex-col justify-center items-center">
-            <p className="text-2xl">Click below to logout</p>
+        <div className="flex flex-col justify-center items-center gap-2">
+            <p className="text-2xl font-mono">Click below to logout</p>
             <button onClick={() => logout()} className="btn btn-blue">
                 Logout
             </button>

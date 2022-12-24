@@ -5,6 +5,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
 
+import requests
 
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
     @classmethod
@@ -32,5 +33,20 @@ def courses(request):
     serializer = CourseSerializer(courses, many=True)
     print(serializer.data)
     return Response(serializer.data)
+
+@api_view(['GET'])
+def life(request):
+    response = requests.get("https://opentdb.com/api.php?amount=10")
+
+    data = response.json()
+
+    if data["response_code"] == 0:
+        return Response(data)
+    else:
+        return Response({
+            "error": "Something went wrong"
+        })
+
+    
 
 

@@ -36,8 +36,8 @@ export default function Study() {
 
     return (
         <div className="flex flex-col justify-center items-center">
-            <h1 className="text-5xl">Study</h1>
-            <p className="text-2xl">Welcome to the Study room</p>
+            <h1 className="text-5xl font-mono">Study</h1>
+            <p className="text-2xl font-mono">Welcome to the Study room</p>
             <ul>
                 {courses.map((course, index) => (
                     <li key={index} className="text-sky-500">

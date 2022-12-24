@@ -1,11 +1,7 @@
-import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import AuthContext from "../context/AuthContext";
 
 function Navbar() {
     const navigate = useNavigate();
-
-    let { user } = useContext(AuthContext);
 
     // Sidebar navigation
     return (

@@ -28,7 +28,7 @@ function Main() {
 function Protected() {
     let { user } = useContext(AuthContext);
 
-    // <Outlet> Purpose -
+    // <Outlet> Purpose
     // The <Outlet> component can be used in a parent <Route> element to render out child elements.
     // So the solution can be to nest private routes inside of a parent route.
     return user ? <Outlet /> : <Navigate to="/login" />;

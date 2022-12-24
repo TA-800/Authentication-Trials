@@ -13,4 +13,4 @@ To get User-Authentication working with Django, React/JSX and [SimpleJWT](https:
 -   Protected routes.
 -   Access token is obtained through a Refresh token (slightly more secure).
 -   User Auth data persists even after closing site (before Refresh token expiry).
--   Django backend & React frontend.
+-   Django backend & React frontend & Tailwind CSS.

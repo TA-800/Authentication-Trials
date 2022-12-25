@@ -85,10 +85,15 @@ ul {
 .trivia-wrapper {
   display: flex;
   flex-direction: column;
+  gap: 1rem;
   background-color: rgb(50, 50, 50);
   font-family: 'Open Sans', sans-serif;
   height: 65vh;
   overflow-y: scroll;
+}
+
+.trivia-wrapper > li {
+  padding-top: 1rem;
 }
 
 .trivia-wrapper .trivia-question {
@@ -103,7 +108,7 @@ ul {
   column-gap: 1rem;
   row-gap: 0.75rem;
   margin-top: 1rem;
-  margin-bottom: 5rem;
+  margin-bottom: 4rem;
 }
 
 .trivia-wrapper .trivia-answer {
@@ -121,7 +126,7 @@ ul {
 
 .trivia-wrapper .trivia-answer:hover {
   background-color: rgb(50, 50, 65);
-  letter-spacing: 0.05rem;
+  letter-spacing: 0.01rem;
   font-weight: bold;
 }
 
@@ -129,8 +134,30 @@ ul {
 .trivia-wrapper .trivia-answer.selected {
   background-color: rgb(230, 230, 255);
   color: black;
-  letter-spacing: 0.05rem;
+  letter-spacing: 0.01rem;
   font-weight: bold;
+}
+
+.show {
+  background-color: rgb(225, 0, 0) !important;
+  letter-spacing: 0.01rem;
+  font-weight: bold;
+}
+
+.correct {
+  background-color: rgb(0, 225, 0) !important;
+  color: black;
+  letter-spacing: 0.01rem;
+  font-weight: bold;
+}
+
+img {
+  filter: brightness(100%) invert(1);
+}
+
+/* Reduce the margin-bottom of the last question */
+.trivia-wrapper > li:nth-last-child(2) > .trivia-answer-wrapper {
+  margin-bottom: 1rem;
 }
 
 /* Changing the below properties when on a small screen */

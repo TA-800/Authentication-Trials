@@ -19,6 +19,7 @@ function Questions() {
     const [loading, setLoading] = useState(true);
     const [reload, setReload] = useState(false);
     const parentRef = useRef(null);
+    let selectable = true;
 
     useEffect(() => {
         setLoading(true);
@@ -47,44 +48,57 @@ function Questions() {
     }, [reload]);
 
     function selectAnswer(event) {
-        const parent = event.target.parentNode;
-        const siblings = Array.from(parent.children).filter(
-            (child) => child !== event.target
-        );
+        if (selectable) {
+            const parent = event.target.parentNode;
+            const siblings = Array.from(parent.children).filter(
+                (child) => child !== event.target
+            );
 
-        siblings.forEach((sibling) => {
-            sibling.classList.remove("selected");
-        });
+            siblings.forEach((sibling) => {
+                sibling.classList.remove("selected");
+            });
 
-        event.target.classList.add("selected");
+            event.target.classList.add("selected");
+        }
     }
 
     function submitAnswer(event) {
         let score = 0;
         // The last question is the submit button which is not a question, so it will show up as undefined
-        const questionArray = Array.from(parentRef.current.children).forEach(
-            (question) => {
-                // Get the selected answer
-                const selectedAnswer = question.querySelector(".selected");
-                // Get the correct answer
-                const correctAnswer = question.dataset.answer
-                    ? he.unescape(question.dataset.answer)
-                    : undefined;
-                // Console log the result
-                console.log({
-                    selectedAnswer: selectedAnswer?.textContent,
-                    correctAnswer: correctAnswer,
-                });
-                // Check if the selected answer is correct
-                if (correctAnswer) {
-                    if (selectedAnswer?.textContent === correctAnswer) {
-                        score++;
-                    }
+        Array.from(parentRef.current.children).forEach((question) => {
+            // Disable the ability to select answers
+            selectable = false;
+            // Get the selected answer
+            let selectedAnswer = question.querySelector(".selected");
+            selectedAnswer?.classList.remove("selected");
+            selectedAnswer?.classList.add("show");
+            // Get the correct answer
+            const correctAnswer = question.dataset.answer
+                ? he.unescape(question.dataset.answer)
+                : undefined;
+            // Get the correct answer element
+            question.querySelectorAll(".trivia-answer").forEach((answer) => {
+                if (answer.textContent === correctAnswer) {
+                    answer.classList.add("correct");
+                }
+            });
+            // Console log the result
+            console.log({
+                selectedAnswer: selectedAnswer?.textContent,
+                correctAnswer: correctAnswer,
+            });
+            // Check if the selected answer is correct
+            if (correctAnswer) {
+                if (selectedAnswer?.textContent === correctAnswer) {
+                    // Slightly green out the background of the entire question
+                    question.style.backgroundColor = "rgba(0, 255, 0, 0.05)";
+                    score++;
+                } else {
+                    // Slightly gray out the background of the entire question
+                    question.style.backgroundColor = "rgba(0, 0, 0, 0.10)";
                 }
             }
-        );
-        // console.log(`Score: ${score} / ${questions.length}`);
-
+        });
         // Disable the button
         event.target.disabled = true;
         event.target.classList.add("disabled");
@@ -108,7 +122,23 @@ function Questions() {
             </div>
             <br />
             {loading ? (
-                <div>Loading</div>
+                // <div>Loading</div>
+                // Add a div with the text "Loading" and the icon "load.png" in the same folder
+                <div className="flex flex-row gap-x-4 text-5xl">
+                    <p className="font-mono">Loading</p>
+                    <img src={require("../load.png")} alt="Refresh icon" />
+                    <p className="text-sm opacity-50">
+                        <a
+                            target="_blank"
+                            href="https://icons8.com/icon/Gtd77uwrkdpc/refresh">
+                            Refresh
+                        </a>{" "}
+                        icon by{" "}
+                        <a target="_blank" href="https://icons8.com">
+                            Icons8
+                        </a>
+                    </p>
+                </div>
             ) : (
                 <ol className="trivia-wrapper" ref={parentRef}>
                     {questions.map((q, i) => (
@@ -118,23 +148,23 @@ function Questions() {
                                 <strong>{he.unescape(q.question)}</strong>
                             </p>
                             <ul className="trivia-answer-wrapper">
-                                <li
-                                    className="trivia-answer"
-                                    onClick={(e) => selectAnswer(e)}>
-                                    {he.unescape(q.correct_answer)}
-                                </li>
-                                {q.incorrect_answers.map((a, j) => (
-                                    <li
-                                        className="trivia-answer"
-                                        onClick={(e) => selectAnswer(e)}
-                                        key={j}>
-                                        {he.unescape(a)}
-                                    </li>
-                                ))}
+                                {randomizeArray([
+                                    ...q.incorrect_answers,
+                                    q.correct_answer,
+                                ]).map((a, j) => {
+                                    return (
+                                        <li
+                                            className="trivia-answer"
+                                            onClick={(e) => selectAnswer(e)}
+                                            key={j}>
+                                            {he.unescape(a)}
+                                        </li>
+                                    );
+                                })}
                             </ul>
                         </li>
                     ))}
-                    <li className="flex justify-end text-lg m-10">
+                    <li className="flex justify-end text-lg mx-10 mb-2">
                         <button
                             className="btn btn-blue"
                             onClick={(e) => submitAnswer(e)}>
@@ -146,15 +176,13 @@ function Questions() {
         </>
     );
 }
-
-// Reference: https://stackoverflow.com/questions/6234773/can-i-escape-html-special-chars-in-javascript
-// function escapeHtml(unsafe) {
-//     return unsafe
-//         .replace(/&/g, "&amp;")
-//         .replace(/</g, "&lt;")
-//         .replace(/>/g, "&gt;")
-//         .replace(/"/g, "&quot;")
-//         .replace(/'/g, "&#039;");
-// }
-
-// Opposite of the above function
+function randomizeArray(array) {
+    // console.log("Initial:" + array);
+    let randomziedArray = [];
+    while (array.length > 0) {
+        const random = Math.floor(Math.random() * array.length);
+        randomziedArray.push(array[random]);
+        array.splice(random, 1);
+    }
+    return randomziedArray;
+}

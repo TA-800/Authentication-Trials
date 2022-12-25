@@ -164,7 +164,7 @@ function Questions() {
                             </ul>
                         </li>
                     ))}
-                    <li className="flex justify-end text-lg mx-10 mb-2">
+                    <li className="submit-li">
                         <button
                             className="btn btn-blue"
                             onClick={(e) => submitAnswer(e)}>

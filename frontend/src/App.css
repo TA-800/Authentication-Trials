@@ -160,6 +160,10 @@ img {
   margin-bottom: 1rem;
 }
 
+.submit-li {
+  @apply flex justify-end text-lg mx-6 mb-2;
+}
+
 /* Changing the below properties when on a small screen */
 @media (max-width: 640px) {
   .navigation {
@@ -192,5 +196,30 @@ img {
   .main-wrapper {
     margin-left: 8rem;
     margin-top: 0rem;
+  }
+
+  .trivia-wrapper {
+    height: 70vh;
+  }
+
+  .trivia-wrapper .trivia-question {
+    @apply text-xl font-serif text-blue-400 text-center;
+  }
+
+  .trivia-wrapper .trivia-answer {
+    min-width: 20rem; /* Increasing min-width to force wrap, make it list-like */
+    font-size: 1rem; /* 1rem = 16px */
+  }
+}
+
+@media (max-width: 480px) {
+  .navigation {
+    display: none;
+  }
+  .main-wrapper {
+    margin-left: 0rem;
+  }
+  .trivia-wrapper {
+    height: 72vh;
   }
 }

@@ -1,14 +1,20 @@
-import { createContext } from "react";
+import { createContext, useState } from "react";
 
 let lifeContext = createContext();
 export default lifeContext;
 
 export function LifeProvider({ children }) {
+    const [cQuestions, setCQuestions] = useState([]);
+    const [submitted, setSubmitted] = useState(false);
+
     let context = {
-        questions: [],
+        cQuestions,
+        submitted,
+        setCQuestions,
+        setSubmitted,
     };
 
     return (
-        <lifeContext.Provider value={questions}>{children}</lifeContext.Provider>
+        <lifeContext.Provider value={context}>{children}</lifeContext.Provider>
     );
 }

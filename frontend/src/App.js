@@ -1,15 +1,17 @@
-import Main from './components/Main';
-import Navbar from './components/Navbar';
-import './App.css';
-
+import Main from "./components/Main";
+import Navbar from "./components/Navbar";
+import "./App.css";
+import { LifeProvider } from "./context/lifeContext";
 
 function App() {
-  return (
-    <>    
-      <Navbar />
-      <br />
-      <Main />
-    </>
+    return (
+        <>
+            <Navbar />
+            <br />
+            <LifeProvider>
+                <Main />
+            </LifeProvider>
+        </>
     );
 }
 

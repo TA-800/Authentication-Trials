@@ -1,4 +1,5 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useContext } from "react";
+import lifeContext from "../context/lifeContext";
 import he from "he"; // html-escape
 
 export default function () {
@@ -17,35 +18,57 @@ export default function () {
 function Questions() {
     const [questions, setQuestions] = useState([]);
     const [loading, setLoading] = useState(true);
-    const [reload, setReload] = useState(false);
+    const [reload, setReload] = useState(null);
     const parentRef = useRef(null);
     let selectable = true;
 
-    useEffect(() => {
-        setLoading(true);
-        console.log("Fetching data from backend");
-        // Empty the questions array
-        setQuestions([]);
-        fetch("http://127.0.0.1:8000/backend/life/") // Using Django to fetch data instead of fetching from the API directly just for fun.
-            .then((response) => {
-                if (response.status !== 200) {
-                    throw new Error(
-                        "Something went wrong when trying to fetch data"
-                    );
-                }
+    const { cQuestions, submitted, setCQuestions, setSubmitted } =
+        useContext(lifeContext);
 
-                return response.json();
-            })
-            .then((data) => {
-                for (let obj of data.results) {
-                    setQuestions((questions) => [...questions, obj]);
-                }
-                setLoading(false);
-            })
-            .catch((error) => {
-                alert(error);
-            });
+    useEffect(() => {
+        // Check if the questions are already loaded in the context
+        setLoading(true);
+        // Reload being null means that the page is loaded (or switched to) for the first time
+        if (cQuestions.length >= 10 && reload === null && !submitted) {
+            // Load questions from the context
+            console.log("Loading data from context");
+            setQuestions(cQuestions);
+        } else {
+            // Empty the questions array (or else the new questions being fetched will only be appended to the old questions, if any)
+            setQuestions([]);
+            console.log("Fetching data from backend");
+            fetch("http://127.0.0.1:8000/backend/life/") // Using Django to fetch data instead of fetching from the API directly just for fun.
+                .then((response) => {
+                    if (response.status !== 200) {
+                        throw new Error(
+                            "Something went wrong when trying to fetch data"
+                        );
+                    }
+
+                    return response.json();
+                })
+                .then((data) => {
+                    for (let obj of data.results) {
+                        setQuestions((questions) => [...questions, obj]);
+                    }
+                })
+                .catch((error) => {
+                    alert(error);
+                });
+        }
     }, [reload]);
+
+    useEffect(() => {
+        // Questions are loaded
+        if (questions.length >= 10) {
+            setLoading(false);
+            // Save the questions to the context
+            console.log("Saving current questions to context");
+            setCQuestions(questions);
+            // Set submitted to false
+            setSubmitted(false);
+        }
+    }, [questions]);
 
     function selectAnswer(event) {
         if (selectable) {
@@ -64,6 +87,7 @@ function Questions() {
 
     function submitAnswer(event) {
         let score = 0;
+        setSubmitted(true);
         // The last question is the submit button which is not a question, so it will show up as undefined
         Array.from(parentRef.current.children).forEach((question) => {
             // Disable the ability to select answers
@@ -115,7 +139,15 @@ function Questions() {
                 <div>
                     <button
                         className="btn btn-red"
-                        onClick={() => setReload((reload) => !reload)}>
+                        onClick={() =>
+                            setReload((reload) =>
+                                // If reload is null, then it is the first time the page is loaded.
+                                // Give reload some boolean value to easily change state later and use useEffect on it to fetch data.
+                                // If reload is not null, then it is not the first time the page is loaded, and it means the reload button was clicked.
+                                // So, set reload to the opposite of what it is (easy way to change state and use useEffect on it to fetch data).
+                                reload === null ? true : !reload
+                            )
+                        }>
                         RELOAD
                     </button>
                 </div>

@@ -7,6 +7,17 @@ function Navbar() {
     // Sidebar navigation
     return (
         <nav>
+            <div
+                className="menu-icon"
+                onClick={(e) => {
+                    // Get nav element
+                    document
+                        .querySelector(".navigation")
+                        .classList.toggle("to-side");
+                    e.currentTarget.classList.toggle("to-side");
+                }}>
+                <img src={require("../menu.png")} alt="Menu icon" />
+            </div>
             <ul className="navigation">
                 <li
                     onClick={() => navigate("/home")}

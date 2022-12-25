@@ -30,8 +30,22 @@
   }
 }
 
+:root {
+  /* Variables */
+  --primary-color: rgb(20, 20, 20);
+  --secondary-color: black; 
+  --answer-color: rgb(0, 0, 0, 0.35);
+  --answer-border-color: rgb(255, 255, 255, 0.15);
+  --answer-hover-color: rgb(50, 50, 65, 0.3);
+  --answer-correct-color: rgb(0, 225, 0, 1);
+  --answer-incorrect-color: rgb(255, 0, 0, 1);
+  --trivia-wrapper-bg-color: rgb(50, 50, 50, 0.75);
+  --hover-color: rgb(255, 255, 255, 1);
+  --select-color: rgb(230, 230, 255, 1);
+}
+
 body {
-  background-color: rgb(20, 20, 20);
+  background-color: var(--primary-color);
   color: white;
 }
 
@@ -49,8 +63,13 @@ ul {
   column-gap: 0.25rem;
 
   text-transform: uppercase;  
-  background-color: black;
+  background-color: var(--secondary-color);
 }
+
+.menu-icon {
+  display: none;
+}
+
 .navigation li {
   display: flex;
   height: 3rem;
@@ -58,10 +77,11 @@ ul {
   justify-content: center;
   align-items: center;
   border: 1px solid rgb(255, 255, 255, 0.5);
+  transition: 0.25s;
 }
 
 .navigation li:hover {
-  background-color: white;
+  background-color: var(--hover-color);
   color: black;
   letter-spacing: 0.05rem;
   font-weight: bold;
@@ -72,7 +92,7 @@ ul {
 }
 
 .navigation .active-navbar-button {
-  background-color: rgb(230, 230, 255);
+  background-color: var(--select-color);
   color: black;
   letter-spacing: 0.05rem;
   font-weight: bold;
@@ -86,7 +106,7 @@ ul {
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  background-color: rgb(50, 50, 50);
+  background-color: var(--trivia-wrapper-bg-color);
   font-family: 'Open Sans', sans-serif;
   height: 65vh;
   overflow-y: scroll;
@@ -113,26 +133,27 @@ ul {
 
 .trivia-wrapper .trivia-answer {
   box-sizing: border-box;
-  border: 1px solid rgb(255, 255, 255, 0.5);
-  border-radius: 0.75rem;
-  background-color: black;
+  border: 2px solid var(--answer-border-color);
+  border-radius: 0.25rem;
+  background-color: var(--answer-color);
   min-width: 10rem;
   padding: 1rem;
   cursor: pointer;
   text-align: center;
   /* font-weight: 500; */
   font-size: 1.5rem; /* 1rem = 16px */
+  transition: 0.25s;
 }
 
 .trivia-wrapper .trivia-answer:hover {
-  background-color: rgb(50, 50, 65);
+  background-color: var(--answer-hover-color);
   letter-spacing: 0.01rem;
   font-weight: bold;
 }
 
 /* On clicking a trivia-answer button, change its properties */
 .trivia-wrapper .trivia-answer.selected {
-  background-color: rgb(230, 230, 255);
+  background-color: var(--select-color);
   color: black;
   letter-spacing: 0.01rem;
   font-weight: bold;
@@ -151,6 +172,7 @@ ul {
   font-weight: bold;
 }
 
+/* Refresh / loading icon */
 img {
   filter: brightness(100%) invert(1);
 }
@@ -167,26 +189,44 @@ img {
 /* Changing the below properties when on a small screen */
 @media (max-width: 640px) {
   .navigation {
+    display: flex;
+    /* position: fixed; */
+    transform: translate(-9rem, 0);
     flex-flow: column;
     height: 100vh;
-    width: 8rem;
+    width: 9rem;
     row-gap: 0.25rem;
+    transition: transform 0.5s ease;
     
-    text-transform: uppercase;
-    background-color: black;
+  }
+
+  .menu-icon {
+    display: block;
+    position:absolute;
+    top: 0rem;
+    left: 0rem;
+    padding: 0.5rem;
+    width: 3rem;
+    background-color: var(--secondary-color);
+    cursor: pointer;
+    transition: 0.5s ease;
+  }
+
+  .menu-icon.to-side {
+    transform: translate(9rem, 0);
+  }
+
+  .navigation.to-side {
+    
+    transform: translate(0rem, 0);
   }
 
   .navigation li {
     display: flex;
     height: 3rem;
-    /* width: 100%; */
+    width: 100%;
     justify-content: center;
     align-items: center;
-  }
-
-  .navigation li:hover {
-    background-color: white;
-    color: black;
   }
 
   .navigation li:last-child {
@@ -194,7 +234,7 @@ img {
   }
 
   .main-wrapper {
-    margin-left: 8rem;
+    /* margin-left: 5rem; */
     margin-top: 0rem;
   }
 
@@ -207,19 +247,7 @@ img {
   }
 
   .trivia-wrapper .trivia-answer {
-    min-width: 20rem; /* Increasing min-width to force wrap, make it list-like */
+    min-width: 25rem; /* Increasing min-width to force wrap, make it list-like */
     font-size: 1rem; /* 1rem = 16px */
-  }
-}
-
-@media (max-width: 480px) {
-  .navigation {
-    display: none;
-  }
-  .main-wrapper {
-    margin-left: 0rem;
-  }
-  .trivia-wrapper {
-    height: 72vh;
   }
 }

@@ -147,8 +147,7 @@ ul {
 
 .trivia-wrapper .trivia-answer:hover {
   background-color: var(--answer-hover-color);
-  letter-spacing: 0.01rem;
-  font-weight: bold;
+  font-weight: 600;
 }
 
 /* On clicking a trivia-answer button, change its properties */
@@ -172,7 +171,7 @@ ul {
   font-weight: bold;
 }
 
-/* Refresh / loading icon */
+/* Refresh / loading icon & hamburger menu icon */
 img {
   filter: brightness(100%) invert(1);
 }

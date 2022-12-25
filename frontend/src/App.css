@@ -61,7 +61,7 @@ ul {
   flex-flow: row;
   width: 100vw;
   column-gap: 0.25rem;
-
+  z-index: 1;
   text-transform: uppercase;  
   background-color: var(--secondary-color);
 }

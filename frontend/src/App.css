@@ -87,6 +87,8 @@ ul {
   flex-direction: column;
   background-color: rgb(50, 50, 50);
   font-family: 'Open Sans', sans-serif;
+  height: 65vh;
+  overflow-y: scroll;
 }
 
 .trivia-wrapper .trivia-question {
@@ -105,6 +107,7 @@ ul {
 }
 
 .trivia-wrapper .trivia-answer {
+  box-sizing: border-box;
   border: 1px solid rgb(255, 255, 255, 0.5);
   border-radius: 0.75rem;
   background-color: black;
@@ -113,6 +116,7 @@ ul {
   cursor: pointer;
   text-align: center;
   /* font-weight: 500; */
+  font-size: 1.5rem; /* 1rem = 16px */
 }
 
 .trivia-wrapper .trivia-answer:hover {

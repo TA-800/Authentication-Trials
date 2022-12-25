@@ -8,6 +8,10 @@ To get User Authentication working with Django and React/JSX through [SimpleJWT]
 
 ![image](https://user-images.githubusercontent.com/31612100/209422588-5ab69d21-2afe-4bcd-bdf1-39fee38c6652.png)
 
+#### Some other React learning & testing thrown in here as well.
+![image](https://user-images.githubusercontent.com/31612100/209455603-4da130e7-1b87-45ca-83ac-24284fd3e780.png)
+
+
 ## Comments:
 
 -   Protected routes.

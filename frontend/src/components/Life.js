@@ -20,7 +20,7 @@ function Questions() {
     const [loading, setLoading] = useState(true);
     const [reload, setReload] = useState(null);
     const parentRef = useRef(null);
-    let selectable = true;
+    const [selectable, setSelectable] = useState(true);
 
     const { cQuestions, submitted, setCQuestions, setSubmitted } =
         useContext(lifeContext);
@@ -63,7 +63,7 @@ function Questions() {
         if (questions.length >= 10) {
             setLoading(false);
             // Save the questions to the context
-            console.log("Saving current questions to context");
+            // console.log("Saving current questions to context");
             setCQuestions(questions);
             // Set submitted to false
             setSubmitted(false);
@@ -88,10 +88,10 @@ function Questions() {
     function submitAnswer(event) {
         let score = 0;
         setSubmitted(true);
+        // Disable the ability to select answers
+        setSelectable(false);
         // The last question is the submit button which is not a question, so it will show up as undefined
         Array.from(parentRef.current.children).forEach((question) => {
-            // Disable the ability to select answers
-            selectable = false;
             // Get the selected answer
             let selectedAnswer = question.querySelector(".selected");
             selectedAnswer?.classList.remove("selected");
@@ -107,10 +107,10 @@ function Questions() {
                 }
             });
             // Console log the result
-            console.log({
-                selectedAnswer: selectedAnswer?.textContent,
-                correctAnswer: correctAnswer,
-            });
+            // console.log({
+            //     selectedAnswer: selectedAnswer?.textContent,
+            //     correctAnswer: correctAnswer,
+            // });
             // Check if the selected answer is correct
             if (correctAnswer) {
                 if (selectedAnswer?.textContent === correctAnswer) {
@@ -130,6 +130,18 @@ function Questions() {
         event.target.textContent = `Score: ${score} / ${questions.length}`;
     }
 
+    function randomizeArray(array) {
+        if (!selectable) return array;
+        console.log("Randomizing array");
+        let randomziedArray = [];
+        while (array.length > 0) {
+            const random = Math.floor(Math.random() * array.length);
+            randomziedArray.push(array[random]);
+            array.splice(random, 1);
+        }
+        return randomziedArray;
+    }
+
     return (
         <>
             <div className="text-xl flex flex-row justify-between items-center mx-10">
@@ -139,15 +151,16 @@ function Questions() {
                 <div>
                     <button
                         className="btn btn-red"
-                        onClick={() =>
+                        onClick={() => {
                             setReload((reload) =>
                                 // If reload is null, then it is the first time the page is loaded.
                                 // Give reload some boolean value to easily change state later and use useEffect on it to fetch data.
                                 // If reload is not null, then it is not the first time the page is loaded, and it means the reload button was clicked.
                                 // So, set reload to the opposite of what it is (easy way to change state and use useEffect on it to fetch data).
                                 reload === null ? true : !reload
-                            )
-                        }>
+                            );
+                            setSelectable(true);
+                        }}>
                         RELOAD
                     </button>
                 </div>
@@ -207,14 +220,4 @@ function Questions() {
             )}
         </>
     );
-}
-function randomizeArray(array) {
-    // console.log("Initial:" + array);
-    let randomziedArray = [];
-    while (array.length > 0) {
-        const random = Math.floor(Math.random() * array.length);
-        randomziedArray.push(array[random]);
-        array.splice(random, 1);
-    }
-    return randomziedArray;
 }

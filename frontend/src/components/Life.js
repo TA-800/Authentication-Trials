@@ -19,11 +19,12 @@ function Questions() {
     const [questions, setQuestions] = useState([]);
     const [loading, setLoading] = useState(true);
     const [reload, setReload] = useState(null);
-    const parentRef = useRef(null);
     const [selectable, setSelectable] = useState(true);
 
     const { cQuestions, submitted, setCQuestions, setSubmitted } =
         useContext(lifeContext);
+
+    const parentRef = useRef(null);
 
     useEffect(() => {
         // Check if the questions are already loaded in the context
@@ -49,6 +50,11 @@ function Questions() {
                 })
                 .then((data) => {
                     for (let obj of data.results) {
+                        // To this object, add a new property called "answers" which is an array of the incorrect answers and the correct answer
+                        obj.answers = randomizeArray([
+                            obj.correct_answer,
+                            ...obj.incorrect_answers,
+                        ]);
                         setQuestions((questions) => [...questions, obj]);
                     }
                 })
@@ -106,11 +112,6 @@ function Questions() {
                     answer.classList.add("correct");
                 }
             });
-            // Console log the result
-            // console.log({
-            //     selectedAnswer: selectedAnswer?.textContent,
-            //     correctAnswer: correctAnswer,
-            // });
             // Check if the selected answer is correct
             if (correctAnswer) {
                 if (selectedAnswer?.textContent === correctAnswer) {
@@ -145,8 +146,8 @@ function Questions() {
     return (
         <>
             <div className="text-xl flex flex-row justify-between items-center mx-10">
-                <div>
-                    <i>TRIVIA FOR YOUR LEISURE.</i>
+                <div className="font-serif tracking-wider opacity-60">
+                    <i>TRIVIA FOR YOUR LEISURE</i>
                 </div>
                 <div>
                     <button
@@ -193,10 +194,7 @@ function Questions() {
                                 <strong>{he.unescape(q.question)}</strong>
                             </p>
                             <ul className="trivia-answer-wrapper">
-                                {randomizeArray([
-                                    ...q.incorrect_answers,
-                                    q.correct_answer,
-                                ]).map((a, j) => {
+                                {q.answers.map((a, j) => {
                                     return (
                                         <li
                                             className="trivia-answer"

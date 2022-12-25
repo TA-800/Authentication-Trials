@@ -32,8 +32,8 @@
 
 :root {
   /* Variables */
-  --primary-color: rgb(20, 20, 20);
-  --secondary-color: black; 
+  --primary-color: rgb(20, 20, 20, 1);
+  --secondary-color: rgb(0, 0, 0, 1); 
   --answer-color: rgb(0, 0, 0, 0.35);
   --answer-border-color: rgb(255, 255, 255, 0.15);
   --answer-hover-color: rgb(50, 50, 65, 0.3);

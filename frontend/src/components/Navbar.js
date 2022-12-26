@@ -39,6 +39,10 @@ function Navbar() {
                     document
                         .querySelector(".navigation")
                         .classList.toggle("to-side");
+                    // Get main wrapper element
+                    document
+                        .querySelector(".main-wrapper")
+                        .classList.toggle("to-side");
                     e.currentTarget.classList.toggle("to-side");
                 }}>
                 <img src={require("../menu.png")} alt="Menu icon" />

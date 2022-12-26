@@ -111,7 +111,9 @@ ul {
 }
 
 .main-wrapper {
-  margin-top: 3rem
+  margin-top: 3rem;
+  transition: 0.5s ease;
+
 }
 
 .trivia-wrapper {
@@ -218,12 +220,18 @@ img {
     content: attr(data-tooltip);
     position: absolute;
     top: 0%;
-    left: 100%;
+    left: 102%;
     display:block;
-    background-color: var(--tooltip-color);
-    color: black;
     padding: 0.5rem;
     pointer-events: none;
+    
+    background-color: var(--tooltip-color);
+    color: black;
+    font-weight: 600;
+    letter-spacing: normal;
+
+    /* transition: none; */
+
   }
 
   .menu-icon {
@@ -243,7 +251,6 @@ img {
   }
 
   .navigation.to-side {
-    
     transform: translate(0rem, 0);
   }
 
@@ -260,8 +267,11 @@ img {
   }
 
   .main-wrapper {
-    /* margin-left: 5rem; */
+    /* margin-left: 9rem; */
     margin-top: 0rem;
+  }
+  .main-wrapper.to-side {
+    margin-left: 9rem;
   }
 
   .trivia-wrapper {

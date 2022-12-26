@@ -34,6 +34,7 @@
   /* Variables */
   --primary-color: rgb(20, 20, 20, 1);
   --secondary-color: rgb(0, 0, 0, 1); 
+  --tooltip-color: rgb(128, 128, 128, 1);
   --answer-color: rgb(0, 0, 0, 0.35);
   --answer-border-color: rgb(255, 255, 255, 0.15);
   --answer-hover-color: rgb(50, 50, 65, 0.3);
@@ -74,13 +75,21 @@ ul {
 
 .navigation li {
   box-sizing: border-box;
+  position: relative;
   display: flex;
+  flex-direction: row;
+  gap: 0.6rem;
   height: 3rem;
   width: 8rem;
   justify-content: center;
   align-items: center;
   border: 2px solid var(--answer-border-color);
   transition: 0.25s;
+}
+
+.navigation li .hide {
+  display: none;
+
 }
 
 .navigation li:hover {
@@ -200,6 +209,21 @@ img {
     row-gap: 0.25rem;
     transition: transform 0.5s ease;
     
+  }
+
+  /* Tooltip */
+  [data-tooltip]:hover::after {
+  /* OR navigation li:hover::after  */
+
+    content: attr(data-tooltip);
+    position: absolute;
+    top: 0%;
+    left: 100%;
+    display:block;
+    background-color: var(--tooltip-color);
+    color: black;
+    padding: 0.5rem;
+    pointer-events: none;
   }
 
   .menu-icon {

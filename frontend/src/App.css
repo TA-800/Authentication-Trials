@@ -67,16 +67,19 @@ ul {
 }
 
 .menu-icon {
+  box-sizing: border-box;
   display: none;
+  border: 2px solid var(--answer-border-color);
 }
 
 .navigation li {
+  box-sizing: border-box;
   display: flex;
   height: 3rem;
   width: 8rem;
   justify-content: center;
   align-items: center;
-  border: 1px solid rgb(255, 255, 255, 0.5);
+  border: 2px solid var(--answer-border-color);
   transition: 0.25s;
 }
 

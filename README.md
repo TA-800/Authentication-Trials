@@ -20,6 +20,3 @@ To get User Authentication working with Django and React/JSX through [SimpleJWT]
 -   Access token is obtained through a Refresh token (slightly more secure).
 -   User Auth data persists even after closing site (before Refresh token expiry).
 -   Django backend & React frontend & Tailwind CSS.
-
-## To add:
--   ~Access token expiry left unchecked.~

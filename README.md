@@ -22,4 +22,4 @@ To get User Authentication working with Django and React/JSX through [SimpleJWT]
 -   Django backend & React frontend & Tailwind CSS.
 
 ## To add:
--   Access token expiry left unchecked.
+-   ~Access token expiry left unchecked.~
